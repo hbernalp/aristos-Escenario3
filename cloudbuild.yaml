@@ -1,14 +1,8 @@
-# se crea un pipeline simple
 steps:
-# 1) Build image
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/web-repo/cloudrun-app:$SHORT_SHA', '.']
-
-# 2) Push image to Artifact Registry
+  args: [ 'build', '-t', 'us-central1-docker.pkg.dev/$PROJECT_ID/web-repo/cloudrun-app:$SHORT_SHA', '.' ]
 - name: 'gcr.io/cloud-builders/docker'
-  args: ['push', 'us-central1-docker.pkg.dev/$PROJECT_ID/web-repo/cloudrun-app:$SHORT_SHA']
-
-# 3) Deploy to Cloud Run
+  args: [ 'push', 'us-central1-docker.pkg.dev/$PROJECT_ID/web-repo/cloudrun-app:$SHORT_SHA' ]
 - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
   entrypoint: 'gcloud'
   args:
@@ -22,6 +16,5 @@ steps:
     - '--platform'
     - 'managed'
     - '--allow-unauthenticated'
-
 images:
- - 'us-central1-docker.pkg.dev/$PROJECT_ID/web-repo/cloudrun-app:$SHORT_SHA'
+- 'us-central1-docker.pkg.dev/$PROJECT_ID/web-repo/cloudrun-app:$SHORT_SHA'
