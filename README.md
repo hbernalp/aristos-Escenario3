@@ -50,3 +50,45 @@ Para el desarrollo del proyecto aprovecharemos las variables que ya tenemos
 ![Proyecto, Region y Zona](img/Registry_Artefact.png)
 
 2. Creando la aplicación simple localmente
+
+    Creo el directorio app, en el esta la app.py, el archivo yaml que se encargara de hacer el build de la aaplicacion, y el Dockerfile el cual hara la creacion del contenedor de la solucion con base en los datos delarchivo requirements.txt
+
+3. Inicializo el Repo de Git, en GitHub para publicar y consumor la solucion y hacer el deploy
+
+4. Dar permisos a la cuenta de Cloud Build
+    
+    Para asignar los permisos de a la cuenta de Cloud Build es necesario conceder los roles necesarios 
+    
+        Artifact Registry writer
+        Cloud Run deployer
+        ServiceAccountUser
+
+    para poder asignarlos se ejecutan los siguientes comandos:
+
+        gcloud projects add-iam-policy-binding test-gcp-473921 \
+        --member="serviceAccount:768653268457@cloudbuild.gserviceaccount.com" \
+        --role="roles/artifactregistry.writer"
+
+![Proyecto, Region y Zona](img/Politica_Iam.png)
+
+        gcloud projects add-iam-policy-binding test-gcp-473921 \
+        --member="serviceAccount:768653268457@cloudbuild.gserviceaccount.com" \
+        --role="roles/run.admin"
+
+![Proyecto, Region y Zona](img/Politica_run.png)
+
+        gcloud projects add-iam-policy-binding test-gcp-473921 \
+        --member="serviceAccount:768653268457@cloudbuild.gserviceaccount.com" \
+        --role="roles/iam.serviceAccountUser"
+
+![Proyecto, Region y Zona](img/politica_serviceAcount.png)
+
+    Estos roles permiten que Cloud Build suba imágenes y despliegue en Cloud Run
+
+5. Crear trigger en Cloud Build 
+    
+    En la consola web se ingresa a Cloud build y se crean los triger correspondientes:
+
+![Proyecto, Region y Zona](img/triger_Deploy.png)
+
+    
